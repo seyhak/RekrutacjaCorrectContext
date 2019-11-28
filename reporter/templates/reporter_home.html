@@ -5,7 +5,6 @@
 <head>
     <!--Django part-->
     {% load static %}
-    {% load filters %}
     <!--End of Django-->
     <meta charset="UTF-8">
     <!--meta tells stuff to search engines-->
@@ -24,84 +23,78 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <!--statics-->
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/babel" href="{% static 'scripts/export_report.js' %}">
     <!--AJAX-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="{% static 'scripts/ajax-form.js' %}"></script>
-    <!--interapp script-->
-    <script>
-        function deleteActiveTab(){
-            tabsArray = $(".nav-link");
-            for(var i=0; i<tabsArray.length;i++)
-            {
-                if(tabsArray[i].classList.contains('active'))
-                {
-                    tabsArray[i].classList.remove('active');
-                }
-            }
-        }
-        function changeActiveTab(){
-            deleteActiveTab();
-            var url = window.location.href;
-            url = url.substr(21);
-            var urlsArray=["{% url 'BasicBusinessManager:main' %}#home","{% url 'BasicBusinessManager:main' %}#contact","{% url 'order_manager:home' %}","{% url 'react_tutorial:home' %}"];
-            var idsArray=['home-tab','contact-tab','restit-tab','react-tutorial-tab'];
-            for(i = 0;i<urlsArray.length;i++)
-            {
-                if(urlsArray[i].includes(url))
-                {
-                    document.getElementById(idsArray[i]).classList.add('active');
-                    break;
-                }
-            }
-        }
-    </script>
+    <!--JSX-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <title>Seyhak Ly</title>
 </head>
 
 <body>
     <!--Top navbar-->
     <header class="bg-light">
-        <nav class="navbar navbar-light navbar-expand-md">
-             <!-- Toggler/collapsibe Button -->
-            <button class="navbar-toggler ml-auto btn-dark" type="button" data-toggle="collapse" data-target="#navbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <ul class="nav-tabs nav collapse navbar-collapse" id="navbar">
-    
-                <li class="nav-item"><a class="nav-link active" id="home-tab" href="{% url 'BasicBusinessManager:main' %}#home">Home</a></li>
-                <!--<li class="nav-item"><a class="nav-link" ></a></li>-->
-                <li class="nav-item"><a class="nav-link " id="contact-tab" href="{% url 'BasicBusinessManager:main' %}#contact" >Contact</a></li>
-                {% if request.user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" id="restit-tab"  href="{% url 'order_manager:home' %}" >RestIT</a></li>
-                {% endif %}
-                <li class="nav-item"><a class="nav-link" id="react-tutorial-tab"  href="{% url 'react_tutorial:home' %}" >React</a></li>
-
-
-                <li class="nav-item ml-auto dropdownContainer">
-                    <a class="nav-link dropdown-toggle ml-auto" data-toggle="dropdown" href="#">
-                        {% if not request.user.is_authenticated %}
-                        Account
-                        {% else %}
-                        {{request.user.username}}
-                        {% endif %}
-                    </a>
-                        <div class="dropdown-menu">
-                            <!--<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="accountdropdown">Account</a>-->
-                            {% if not request.user.is_authenticated %}
-                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#login-modal">Login</button>
-                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#sign-up-modal">Sign Up</button>
-                            {% else %}
-                            <a class="dropdown-item btn"  href="{% url 'BasicBusinessManager:settings' %}">Settings</a>
-                            <a class="dropdown-item btn"  href="{% url 'BasicBusinessManager:logout' %}">Sign Out</a>
-                            {% endif %}
-                        </div>
-                </li>
-            </ul>
-        </nav>
+        <div class="row">
+            <div class="col text-center">
+                <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exportReportModal">Export report</button> 
+            </div>
+        </div>
     </header>
-    <script>window.onload=changeActiveTab();</script>
-    {% block content %}
-    {% endblock %}
+    <section>
+        <div class="modal" id="exportReportModal">
+                <div class="modal-dialog modal-lg">
+                        <div class="modal-content" id="modal-box">
+                    
+                          <!-- Modal Header -->
+                          <div class="modal-header bg-light">
+                            <p class="modal-title">Export Report</p>
+                          </div>
+                    
+                          <!-- Modal body -->
+                          <div class="modal-body">
+                            <form>
+                                        <div class="form-group row">
+                                          <label for="report-name" class="col-sm col-form-label">Report name</label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control-plaintext" id="report-name" placeholder="Shareable Report">
+                                          </div>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                                <label for="report-name" class="col-sm col-form-label">Format</label>
+                                                <div class="col-sm-10">     
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                        <label class="form-check-label" for="inlineRadio2">2</label>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                                
+                                        
+                                                <div class="form-group row">
+                                          <label for="email" class="col-sm-2 col-form-label">E-mail to</label>
+                                          <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="email" placeholder="client@company.com">
+                                          </div>
+                                        </div>
+                            </form>                                      
+                          </div>
+                    
+                          <!-- Modal footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" id="square-btn" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-dark" id="square-btn" data-dismiss="modal">OK</button>
+                        </div>
+                    
+                        </div>
+                      </div>
+        </div>
+    </section>
 </body>
 <footer class="bg-dark">
     <a class="text-white " href="http://www.seyhak.pl">Seyhak Ly &copy 2019</a> 
