@@ -24,6 +24,7 @@ class ScheduleType(models.Model):
     description = models.CharField(max_length=20,blank=True,default="")
     def __str__(self):
         return self.name 
+        
 class Schedule(models.Model):
     date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
