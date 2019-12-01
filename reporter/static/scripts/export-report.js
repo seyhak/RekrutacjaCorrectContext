@@ -1,36 +1,4 @@
-//////////////////////////////////////CSRF code/////////////////////////////
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-  }
-  
-  function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-  }
-  //  $ajaxSetup - Sets the default values for future AJAX requests, beforeSend: runs function before sending reequest
-  $.ajaxSetup({
-    beforeSend: function(xhr, settings) 
-    {     
-        var csrftoken = getCookie('csrftoken');
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-  });
-//////////////////////////END OF CSRF CODE///////////////////////////////////////////
-//////////////////////////REACT/////////////////////////////////////////////////////
+//////////////////////////REACT MODAL/////////////////////////////////////////////////////
 function RadioInput(props) {
     return (
     <div className="form-check form-check-inline">
@@ -60,7 +28,7 @@ class ScheduleType extends React.Component
         <div className="form-group row">
             <label htmlFor="schedule-name" className="col-sm col-form-label">Schedule</label>
             <div className="col-sm-10">     
-                {this.renderRadioInput(0,"No repeat",true)}
+                {this.renderRadioInput(0,"No Repeat",true)}
                 {this.renderRadioInput(1,"Specific Date")}
                 {this.renderRadioInput(2,"Daily")}
                 {this.renderRadioInput(3,"Weekly")}
@@ -73,7 +41,6 @@ class ScheduleType extends React.Component
     );
     }
 }
-//////////TODO: ogarnąć błąd z wysyłaniem na strone, pola required i niewidzialność bloku No reminder.
 class ScheduleBoard extends React.Component
 {
     exportReport(value)
@@ -81,11 +48,8 @@ class ScheduleBoard extends React.Component
         switch(value)
         {
             case "No Repeat":
-                    const divStyle = {
-                        visibility: 'hidden',
-                    };
                     var schedule = (
-                        <div className="form-group row " style={divStyle}>
+                        <div className="form-group row ninja">
                             <label htmlFor="schedule" className="col-sm col-form-label">Date</label>
                             <div className="col-sm-10">     
                                 <div className="form form-inline">   
@@ -222,7 +186,7 @@ function scheduleReactContainer()
 }
 
 //////////////////////////END OF REACT/////////////////////////////////////////////////////
-//////////////////////////AJAX/////////////////////////////////////////////////////////////
+//////////////////////////AJAX SENDER/////////////////////////////////////////////////////////////
 
 class ExportedReport
 {
@@ -263,8 +227,6 @@ class ExportedReport
                 break;
             }
         }
-        console.log(this.scheduleType);
-        
         this.scheduleDate="";
         this.scheduleTime="";
         this.scheduleDay="";
@@ -291,44 +253,32 @@ class ExportedReport
         }
     }
 }
-
 class Sender
 {
     static postReport()
-    {
-        var csrftoken = getCookie('csrftoken');
+    {   
         var user = new ExportedReport(); 
         var jsonFile = user.getJSON();
-        var url = "https://postmanecho.com/post";
-        console.log(jsonFile);
+        var url = "https://postman-echo.com/post";
         $.ajax({
-            type: "POST",
+            method: "POST",
             url: url,
-            CSRF: csrftoken,
+            timeout: 0,
             data: jsonFile,
-            contentType: "application/json",
-          });
-        console.log("posted");
+            success: function(params) {
+                alert("Export file request posted to postman-echo.com");
+            },
+        });
+        url = "http://127.0.0.2:8000/rest/postman/";
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: 'application/json',
+            success: function(params) {
+                alert("Export file request posted to Django Postman");
+            },
+            async: false,
+        });
     }
-}
-
-function postReport(url,idVariablesArray=[])
-{
-  var csrftoken = getCookie('csrftoken');
-  var user = new Object; 
-  var jsonFile;
-  $.getJSON(url,function(data)
-  {
-    jsonFile=JSON.stringify(data);
-    jsonFile = getJsonObjectWithDataFromHTML(idVariablesArray,jsonFile);
-    console.log(jsonFile);
-    $.ajax({
-      type: "PUT",
-      url: url,
-      CSRF: csrftoken,
-      data: jsonFile,
-      contentType: "application/json",
-    });
-  });
 }
 //////////////////////////END OF AJAX/////////////////////////////////////////////////////////////
