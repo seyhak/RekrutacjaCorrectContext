@@ -1,0 +1,26 @@
+{
+  "name": "RekrutacjaCorrectContext",
+  "version": "1.0.0",
+  "description": "SETUP",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seyhak/RekrutacjaCorrectContext.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seyhak/RekrutacjaCorrectContext/issues"
+  },
+  "homepage": "https://github.com/seyhak/RekrutacjaCorrectContext#readme"
+}
