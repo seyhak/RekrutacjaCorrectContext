@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Report from '../components/report/report';
-//////////////////////////AJAX SENDER/////////////////////////////////////////////////////////////
+import ReactDOM from 'react-dom';
+import {Report} from '../components/report/report';
 
-class ExportedReport
+//////////////////////////AJAX SENDER/////////////////////////////////////////////////////////////
+/*class ExportedReport
 {
     constructor()
     {
@@ -94,9 +95,10 @@ class Sender
             async: false,
         });
     }
-}
+}*/
 
-function scheduleReactContainer() 
+//adding to global (for onclick)
+window.scheduleReactContainer = function scheduleReactContainer() 
 {
     console.log("reakcja");
     ReactDOM.render(<Report />, document.getElementById("schedule-container"));

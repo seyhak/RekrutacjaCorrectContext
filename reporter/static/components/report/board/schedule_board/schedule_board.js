@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 class ScheduleBoard extends React.Component
 {
     exportReport(value)
@@ -84,3 +86,4 @@ class ScheduleBoard extends React.Component
     }
 
 }
+export default ScheduleBoard;

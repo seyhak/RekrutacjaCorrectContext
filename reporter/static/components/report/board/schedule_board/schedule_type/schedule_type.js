@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 function RadioInput(props) {
     return (
     <div className="form-check form-check-inline">
@@ -40,3 +42,4 @@ class ScheduleType extends React.Component
     );
     }
 }
+export default ScheduleType;

@@ -1,3 +1,7 @@
+import React, { Component } from 'react';
+import ScheduleType from './schedule_board/schedule_type/schedule_type'
+import ScheduleBoard from './schedule_board/schedule_board'
+
 class Board extends React.Component {
     constructor(props)
     {
@@ -28,3 +32,4 @@ class Board extends React.Component {
         );
       }
 }
+export default Board;
