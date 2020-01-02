@@ -93,7 +93,7 @@ class Sender
             success: function(params) {
                 alert("Export file request posted to Django Postman");
             },
-            async: false,
+            async: false, ///// Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience
         });
     }
 }

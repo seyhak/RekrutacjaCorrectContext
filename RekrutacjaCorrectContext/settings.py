@@ -112,6 +112,14 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:8000',
     'https://postman-echo.com',
 ]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
