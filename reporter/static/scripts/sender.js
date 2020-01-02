@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import {Report} from '../components/report/report';
 
 //////////////////////////AJAX SENDER/////////////////////////////////////////////////////////////
-/*class ExportedReport
+class ExportedReport
 {
     constructor()
     {
+        console.log("exporting");
         this.reportName;
         this.format;
         this.email;
@@ -95,8 +96,8 @@ class Sender
             async: false,
         });
     }
-}*/
-
+}
+window.Sender = Sender;
 //adding to global (for onclick)
 window.scheduleReactContainer = function scheduleReactContainer() 
 {
