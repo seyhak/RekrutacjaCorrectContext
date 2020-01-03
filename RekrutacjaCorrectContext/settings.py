@@ -110,21 +110,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
+CORS_ORIGIN_ALLOW_ALL = True
+#Specify whether or not cookies are allowed to be included in cross-site HTTP requests (CORS).
+CORS_ALLOW_CREDENTIALS = False
+'''
+CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
-    'https://postman-echo.com',
-]
-CORS_ALLOW_METHODS = [
+    'postman-echo.com',
+)'''
+CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',
     'OPTIONS',
     'PATCH',
     'POST',
     'PUT',
-]
-CORS_ALLOW_HEADERS = [
+)
+CORS_ALLOW_HEADERS = (
     'accept',
     'accept-encoding',
     'authorization',
@@ -135,7 +137,7 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
     'json'
-]
+)
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],

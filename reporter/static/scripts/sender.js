@@ -83,6 +83,10 @@ class Sender
             data: jsonFile,
             dataType: "json",
             crossDomain: true,  
+            header:{
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Origin":"*"
+            },
             success: function(params) {
                 alert("Export file request posted to postman-echo.com");
             },
