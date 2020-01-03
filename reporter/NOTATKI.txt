@@ -9,3 +9,4 @@ npm run webpack
 
 CORS - settings django
 https://github.com/adamchainz/django-cors-headers/blob/master/README.rst
+pip install django-cors-middleware

@@ -81,8 +81,13 @@ class Sender
             url: url,
             timeout: 0,
             data: jsonFile,
+            dataType: "json",
+            crossDomain: true,  
             success: function(params) {
                 alert("Export file request posted to postman-echo.com");
+            },
+            fail: function(params){
+                alert("Fail");
             },
         });
         url = "http://127.0.0.2:8000/rest/postman/";
